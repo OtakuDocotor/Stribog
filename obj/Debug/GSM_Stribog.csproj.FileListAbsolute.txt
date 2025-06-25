@@ -1,0 +1,7 @@
+E:\проекты VS\GSM_Stribog\bin\Debug\GSM_Stribog.exe.config
+E:\проекты VS\GSM_Stribog\bin\Debug\GSM_Stribog.exe
+E:\проекты VS\GSM_Stribog\bin\Debug\GSM_Stribog.pdb
+E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.csproj.AssemblyReference.cache
+E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.csproj.CoreCompileInputs.cache
+E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.exe
+E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.pdb
