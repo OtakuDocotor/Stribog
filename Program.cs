@@ -24,42 +24,46 @@ namespace GSM_Stribog
                 switch (state)
                 {
                     case 1:
-                        Stribog stribog1 = new Stribog(512,"s");
+                        Streebog stribog1 = new Streebog(512,"s");
                         byte[] message = HexToBytes("323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323130");
                         string expected = "486f64c1917879417fef082b3381a4e211c324f074654c38823a7b76f830ad00fa1fbae42b1285c0352f227524bc9ab16254288dd6863dccd5b9f54a1ad0541b";
                         byte[] actual = stribog1.GetHash(message);
-                        Console.WriteLine("Пример 1");
                         Console.WriteLine();
-                        Console.WriteLine("Получилось: " + BitConverter.ToString(actual).Replace("-", "").ToLower());
-                        Console.WriteLine("Ожидали: "+ expected);
+
+                        Console.WriteLine("---Control value 1---");
+                        Console.WriteLine("Real    : " + BitConverter.ToString(actual).Replace("-", "").ToLower());
+                        Console.WriteLine("Expected: "+ expected);
                         Check(BitConverter.ToString(actual).Replace("-", "").ToLower(), expected);
 
-                        Stribog stribog2 = new Stribog(256,"s");
+                        Streebog stribog2 = new Streebog(256,"s");
                         byte[] message1 = HexToBytes("323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323130");
                         string expected1 = "00557be5e584fd52a449b16b0251d05d27f94ab76cbaa6da890b59d8ef1e159d";
                         byte[] actual1 = stribog2.GetHash(message1);
-                        Console.WriteLine("Пример 2");
                         Console.WriteLine();
-                        Console.WriteLine("Получилось: " + BitConverter.ToString(actual1).Replace("-", "").ToLower());
-                        Console.WriteLine("Ожидали: " + expected1);
+
+                        Console.WriteLine("---Control value 2---");
+                        Console.WriteLine("Real    : " + BitConverter.ToString(actual1).Replace("-", "").ToLower());
+                        Console.WriteLine("Expected: " + expected1);
                         Check(BitConverter.ToString(actual1).Replace("-", "").ToLower(), expected1);
 
                         byte[] message2 = HexToBytes("fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d1");
                         string expected2 = "28fbc9bada033b1460642bdcddb90c3fb3e56c497ccd0f62b8a2ad4935e85f037613966de4ee00531ae60f3b5a47f8dae06915d5f2f194996fcabf2622e6881e";
                         byte[] actual2 = stribog1.GetHash(message2);
-                        Console.WriteLine("Пример 3");
                         Console.WriteLine();
-                        Console.WriteLine("Получилось: " + BitConverter.ToString(actual2).Replace("-", "").ToLower());
-                        Console.WriteLine("Ожидали: " + expected2);
+
+                        Console.WriteLine("---Control value 3---");
+                        Console.WriteLine("Real    : " + BitConverter.ToString(actual2).Replace("-", "").ToLower());
+                        Console.WriteLine("Expected: " + expected2);
                         Check(BitConverter.ToString(actual2).Replace("-", "").ToLower(), expected2);
 
                         byte[] message3 = HexToBytes("fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d1");
                         string expected3 = "508f7e553c06501d749a66fc28c6cac0b005746d97537fa85d9e40904efed29d";
                         byte[] actual3 = stribog2.GetHash(message2);
-                        Console.WriteLine("Пример 4");
                         Console.WriteLine();
-                        Console.WriteLine("Получилось: " + BitConverter.ToString(actual3).Replace("-", "").ToLower());
-                        Console.WriteLine("Ожидали: " + expected3);
+
+                        Console.WriteLine("---Control value 4---");
+                        Console.WriteLine("Real    : " + BitConverter.ToString(actual3).Replace("-", "").ToLower());
+                        Console.WriteLine("Expected: " + expected3);
                         Check(BitConverter.ToString(actual3).Replace("-", "").ToLower(), expected3);
 
                         Console.WriteLine();
@@ -67,6 +71,38 @@ namespace GSM_Stribog
                     case 2:
                         break;
                     case 3:
+                        break;
+                    case 4:
+                        var (msg1, msg2) = StreebogCollisionFinder.FindCollisionBasic(24);
+
+                        Console.WriteLine("---Collision found!---");
+                        Console.WriteLine($"Message 1: {BitConverter.ToString(msg1)}");
+                        Console.WriteLine($"Message 2: {BitConverter.ToString(msg2)}");
+
+                        // Проверка
+                        var hasher_basic = new Streebog(512, "s");
+                        byte[] hash1 = hasher_basic.GetHash(msg1);
+                        byte[] hash2 = hasher_basic.GetHash(msg2);
+
+                        Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash1.Take(4).ToArray())}");
+                        Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash2.Take(4).ToArray())}");
+                        Console.WriteLine();
+                        break;
+                    case 5:
+                        var (msg_1, msg_2) = StreebogCollisionFinder.FindCollisionIterative(24);
+
+                        Console.WriteLine("---Collision found!---");
+                        Console.WriteLine($"Message 1: {BitConverter.ToString(msg_1)}");
+                        Console.WriteLine($"Message 2: {BitConverter.ToString(msg_2)}");
+
+                        // Проверка
+                        var hasher_iter = new Streebog(512, "s");
+                        byte[] hash_1 = hasher_iter.GetHash(msg_1);
+                        byte[] hash_2 = hasher_iter.GetHash(msg_2);
+
+                        Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash_1.Take(4).ToArray())}");
+                        Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash_2.Take(4).ToArray())}");
+                        Console.WriteLine();
                         break;
                 }
             }
@@ -99,11 +135,11 @@ namespace GSM_Stribog
             }
             if(f )
             {
-                Console.WriteLine("Ok!");
+                Console.WriteLine("Result: OK");
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Result: Error");
             }
         }
     }

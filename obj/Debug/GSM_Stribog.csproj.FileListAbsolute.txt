@@ -5,3 +5,10 @@ E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.csproj.AssemblyReference.
 E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.csproj.CoreCompileInputs.cache
 E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.exe
 E:\проекты VS\GSM_Stribog\obj\Debug\GSM_Stribog.pdb
+C:\Users\Илья\source\repos\Stribog\bin\Debug\GSM_Stribog.exe.config
+C:\Users\Илья\source\repos\Stribog\bin\Debug\GSM_Stribog.exe
+C:\Users\Илья\source\repos\Stribog\bin\Debug\GSM_Stribog.pdb
+C:\Users\Илья\source\repos\Stribog\obj\Debug\GSM_Stribog.csproj.AssemblyReference.cache
+C:\Users\Илья\source\repos\Stribog\obj\Debug\GSM_Stribog.csproj.CoreCompileInputs.cache
+C:\Users\Илья\source\repos\Stribog\obj\Debug\GSM_Stribog.exe
+C:\Users\Илья\source\repos\Stribog\obj\Debug\GSM_Stribog.pdb
