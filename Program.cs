@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+ 
 
 namespace GSM_Stribog
 {
@@ -103,6 +104,9 @@ namespace GSM_Stribog
                         Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash_1.Take(4).ToArray())}");
                         Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash_2.Take(4).ToArray())}");
                         Console.WriteLine();
+                        break;
+                    case 6:
+                        MeaningfulCollisionFinder.FindMeaningfulCollision("iluhaloh", "dimaloh", 1);
                         break;
                 }
             }
