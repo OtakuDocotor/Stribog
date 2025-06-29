@@ -12,7 +12,7 @@ namespace GSM_Stribog
     public class Streebog
     {
         private int hashSize;
-        private ulong[] SL_table = new ulong[256];
+        private ulong[,] PL_Table = new ulong[64, 256];
         private static readonly byte[] IV512 = new byte[64];
         private string Mode;
 
@@ -111,6 +111,7 @@ namespace GSM_Stribog
         {
             this.hashSize = hashSize;
             this.Mode = mode;
+            Fill_PL_Table();
         }
         
         private byte [] S_Transformation(byte[] input )
@@ -146,13 +147,13 @@ namespace GSM_Stribog
         private byte[] L_Transformation(byte[] input)
         {
             byte[] output = new byte[64];
-            for (int i = 0; i < 8; i++)//Делим входной вектор на восесь равный частей по 8 байт(64 бит)
+            for (int i = 0; i < 8; i++)
             {
                 ulong v = 0;
-                for (int j = 0; j < 8; j++)// идем по-байтово
+                for (int j = 0; j < 8; j++)
                 {
-                    byte b = input[i * 8 + j];// берем j-тый байт i-того блока
-                    for (int k = 0; k < 8; k++)// Идем побитово по байту
+                    byte b = input[i * 8 + j];
+                    for (int k = 0; k < 8; k++)
                     {
                         if ((b & (1 << (7 - k))) != 0)
                         {
@@ -160,9 +161,9 @@ namespace GSM_Stribog
                         }
                     }
                 }
-                for (int j = 0; j < 8; j++)//бреобразуем вектор из 64 бит в 8 байтовый вектор
+                for (int j = 0; j < 8; j++)
                 {
-                    output[i * 8 + j] = (byte)(v >> (56 - j * 8));//сначала берем первые 8 бит потом вторые и тд
+                    output[i * 8 + j] = (byte)(v >> (56 - j * 8));
                 }
             }
             return output;
@@ -171,9 +172,15 @@ namespace GSM_Stribog
         private byte[] SPL_Transformation(byte[] input)
         {
             byte[] result = S_Transformation(input);
-            result = P_Transformation(result);
-            result = L_Transformation(result);
-            string check = BitConverter.ToString(result);
+            if (Mode == "s")
+            {
+                result = P_Transformation(result);
+                result = L_Transformation(result);
+            }
+            else
+            {
+                result = PL_Transformation(result);
+            }
             return result;
         }
 
@@ -271,18 +278,43 @@ namespace GSM_Stribog
             return h;
         }
 
-        private void Count_SL_Table()
+        private byte[] PL_Transformation(byte[] input)
         {
-            for(int i = 0;i<256;i++)
+            byte[] output = new byte[64];
+            output = P_Transformation(input);
+            for (int i = 0; i < 8; i++)
             {
-                byte s = Pi[i];
-                ulong res = 0;
-                for(int k =0;k<8;k++)
+                ulong v = 0;
+                for (int j = 0; j < 8; j++)
                 {
-                    if ((s & (1 << (7 - k))) != 0)
+                    v ^= PL_Table[i * 8 + j, output[i * 8 + j]];
+                }
+                for (int j = 0; j < 8; j++)
+                {
+                    output[i * 8 + j] = (byte)(v >> (56 - j * 8));
+                }
+
+            }
+
+            return output;
+        }
+        private void Fill_PL_Table()
+        {
+            for (int i = 0; i < 64; i++)
+            {
+                for (int j = 0; j < 256; j++)
+                {
+                    ulong res = 0;
+                    for (int k = 0; k < 8; k++)
                     {
-                        res ^= A[k];
+                        if ((j & (1 << (7 - k))) != 0)
+                        {
+
+                            int a_index = (i % 8) * 8 + k;
+                            res ^= A[a_index];
+                        }
                     }
+                    PL_Table[i, j] = res;
                 }
             }
         }

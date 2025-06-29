@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
- 
+
 
 namespace GSM_Stribog
 {
@@ -72,6 +74,21 @@ namespace GSM_Stribog
                     case 2:
                         break;
                     case 3:
+                        Streebog str1 = new Streebog(512, "s");
+                        Streebog str2 = new Streebog(512, "f");
+                        byte[] input = File.ReadAllBytes("WarAndWorld.txt");
+                        Stopwatch sw1 = new Stopwatch();
+                        Console.WriteLine("Slow:");
+                        sw1.Start();
+                        Console.WriteLine(BitConverter.ToString(str1.GetHash(input)).Replace("-", "").ToLower());
+                        sw1.Stop();
+                        Console.WriteLine(sw1.ElapsedMilliseconds);
+                        sw1.Restart();
+                        Console.WriteLine("Fast:");
+                        sw1.Start();
+                        Console.WriteLine(BitConverter.ToString(str2.GetHash(input)).Replace("-", "").ToLower());
+                        sw1.Stop();
+                        Console.WriteLine(sw1.ElapsedMilliseconds);
                         break;
                     case 4:
                         var (msg1, msg2) = StreebogCollisionFinder.FindCollisionBasic(24);
