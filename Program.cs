@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -15,7 +16,7 @@ namespace GSM_Stribog
         static void Main(string[] args)
         {
             int state = -1;
-            while(state != 6)
+            while(state < 7)
             {
                 Console.WriteLine("1. Проверка на контрольнах примерах");
                 Console.WriteLine("2. Хэшировать строку");
@@ -91,7 +92,8 @@ namespace GSM_Stribog
                         Console.WriteLine(sw1.ElapsedMilliseconds);
                         break;
                     case 4:
-                        var (msg1, msg2) = StreebogCollisionFinder.FindCollisionBasic(24);
+                        int n = 32;
+                        var (msg1, msg2) = StreebogCollisionFinder.FindCollisionBasic(n);
 
                         Console.WriteLine("---Collision found!---");
                         Console.WriteLine($"Message 1: {BitConverter.ToString(msg1)}");
@@ -102,12 +104,13 @@ namespace GSM_Stribog
                         byte[] hash1 = hasher_basic.GetHash(msg1);
                         byte[] hash2 = hasher_basic.GetHash(msg2);
 
-                        Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash1.Take(4).ToArray())}");
-                        Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash2.Take(4).ToArray())}");
+                        Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash1.Take(n / 8 + 1).ToArray())}");
+                        Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash2.Take(n / 8 + 1).ToArray())}");
                         Console.WriteLine();
                         break;
                     case 5:
-                        var (msg_1, msg_2) = StreebogCollisionFinder.FindCollisionIterative(24);
+                        n = 24;
+                        var (msg_1, msg_2) = StreebogCollisionFinder.FindCollisionIterative(n);
 
                         Console.WriteLine("---Collision found!---");
                         Console.WriteLine($"Message 1: {BitConverter.ToString(msg_1)}");
@@ -118,13 +121,17 @@ namespace GSM_Stribog
                         byte[] hash_1 = hasher_iter.GetHash(msg_1);
                         byte[] hash_2 = hasher_iter.GetHash(msg_2);
 
-                        Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash_1.Take(4).ToArray())}");
-                        Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash_2.Take(4).ToArray())}");
+                        Console.WriteLine($"Truncated hash 1: {BitConverter.ToString(hash_1.Take(n / 8 + 1).ToArray())}");
+                        Console.WriteLine($"Truncated hash 2: {BitConverter.ToString(hash_2.Take(n / 8 + 1).ToArray())}");
                         Console.WriteLine();
                         break;
                     case 6:
                         MeaningfulCollisionFinder.FindMeaningfulCollision("iluhaloh", "dimaloh", 1);
                         break;
+                    default:
+                        Titles();
+                        break;
+                        
                 }
             }
             Console.ReadKey();
@@ -163,5 +170,27 @@ namespace GSM_Stribog
                 Console.WriteLine("Result: Error");
             }
         }
+        #region }
+        public static void Titles()
+        {
+            Console.WriteLine("Thank you for your attention! We need salary from university, please postavte 4! Mi vas lyubim");
+            Console.WriteLine("Над проектам работали:");
+            List<string> developers = new List<string>() { "Ilya Sokolov aka Agent JRU", "Ilya Gusev aka ZhateckyGus",
+                            "Dmitriy Milkov aka Frederick Prostatnik", "Deepseek aka human", "ChatGPT aka woman", "GitHub Repositories", "And Others",
+                            "with supporting from Eseniya", "with supporting from Gleb",
+                            "with supporting from Konstantin", "under the leadership A. Belov"};
+
+            foreach (var developer in developers)
+            {
+                Console.WriteLine(developer);
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.WriteLine(".");
+                    Thread.Sleep(1000);
+                }
+            }
+            Console.WriteLine("To be continued...");
+        }
+        #endregion
     }
 }

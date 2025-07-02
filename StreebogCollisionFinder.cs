@@ -18,7 +18,6 @@ namespace GSM_Stribog
 
             for (int i = 0; i < maxIterations; i++)
             {
-                // генерируем случайное сообщение
                 byte[] message = new byte[64];
                 rng.GetBytes(message);
 
@@ -73,8 +72,19 @@ namespace GSM_Stribog
                     chain[hashKey] = current;
                 }
 
-                // Следующее сообщение = текущий хэш
-                current = truncated;
+                byte[] next = new byte[64];
+                Buffer.BlockCopy(fullHash, 0, next, 0, Math.Min(fullHash.Length, next.Length));
+
+                if (fullHash.Length < next.Length)
+                {
+                    byte[] remaining = new byte[next.Length - fullHash.Length];
+                    rng.GetBytes(remaining);
+                    Buffer.BlockCopy(remaining, 0, next, fullHash.Length, remaining.Length);
+                }
+
+                current = next;
+
+                //current = truncated;
             }
 
             throw new Exception($"Collision not found in {maxIterations} iterations");
