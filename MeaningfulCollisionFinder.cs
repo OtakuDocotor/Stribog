@@ -6,10 +6,11 @@ using System;
 public class MeaningfulCollisionFinder
 {
     public static (string, string, byte[]) FindMeaningfulCollision(
-    string msgText1,
-    string msgText2,
-    int bytesToMatch,  // байты
-    int maxIterations = 1000000)
+        string msgText1,
+        string msgText2,
+        int bytesToMatch,
+        int maxIterations = 1000000
+        )
     {
         Console.WriteLine($"Base messages: \"{msgText1}\" and \"{msgText2}\"");
 
@@ -30,7 +31,7 @@ public class MeaningfulCollisionFinder
             byte[] hash2 = hasher.GetHash(Encoding.UTF8.GetBytes(fullMsg2));
 
             bool match = true;
-            for (int i = 0; i < bytesToMatch; i++)  // сравниваем байты
+            for (int i = 0; i < bytesToMatch; i++)
             {
                 if (hash1[i] != hash2[i])
                 {

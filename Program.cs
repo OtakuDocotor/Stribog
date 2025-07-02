@@ -79,20 +79,20 @@ namespace GSM_Stribog
                         Streebog str2 = new Streebog(512, "f");
                         byte[] input = File.ReadAllBytes("WarAndWorld.txt");
                         Stopwatch sw1 = new Stopwatch();
-                        Console.WriteLine("Slow:");
+                        Console.WriteLine("---Slow version---");
                         sw1.Start();
-                        Console.WriteLine(BitConverter.ToString(str1.GetHash(input)).Replace("-", "").ToLower());
+                        Console.WriteLine($"Total hash: {BitConverter.ToString(str1.GetHash(input)).Replace("-", "").ToLower()}");
                         sw1.Stop();
-                        Console.WriteLine(sw1.ElapsedMilliseconds);
+                        Console.WriteLine($"Total time: {sw1.ElapsedMilliseconds} ms");
+                        Console.WriteLine("---Fast version---");
                         sw1.Restart();
-                        Console.WriteLine("Fast:");
-                        sw1.Start();
-                        Console.WriteLine(BitConverter.ToString(str2.GetHash(input)).Replace("-", "").ToLower());
+                        Console.WriteLine($"Total hash: {BitConverter.ToString(str2.GetHash(input)).Replace("-", "").ToLower()}");
                         sw1.Stop();
-                        Console.WriteLine(sw1.ElapsedMilliseconds);
+                        Console.WriteLine($"Total time: {sw1.ElapsedMilliseconds} ms");
+                        Console.WriteLine();
                         break;
                     case 4:
-                        int n = 32;
+                        int n = 24;
                         var (msg1, msg2) = StreebogCollisionFinder.FindCollisionBasic(n);
 
                         Console.WriteLine("---Collision found!---");
@@ -126,7 +126,7 @@ namespace GSM_Stribog
                         Console.WriteLine();
                         break;
                     case 6:
-                        MeaningfulCollisionFinder.FindMeaningfulCollision("iluhaloh", "dimaloh", 1);
+                        MeaningfulCollisionFinder.FindMeaningfulCollision("Streebog", "Sdvaabog", 2);
                         break;
                     default:
                         Titles();
@@ -173,10 +173,13 @@ namespace GSM_Stribog
         #region }
         public static void Titles()
         {
-            Console.WriteLine("Thank you for your attention! We need salary from university, please postavte 4! Mi vas lyubim");
-            Console.WriteLine("Над проектам работали:");
+            Console.Clear();
+            Console.WriteLine("Thank you for your attention! We need a salary from the University, please postav`te 4! Mi vas lyubim! <3");
+            Console.WriteLine();
+
+            Console.WriteLine("Над проектoм работали:");
             List<string> developers = new List<string>() { "Ilya Sokolov aka Agent JRU", "Ilya Gusev aka ZhateckyGus",
-                            "Dmitriy Milkov aka Frederick Prostatnik", "Deepseek aka human", "ChatGPT aka woman", "GitHub Repositories", "And Others",
+                            "Dmitriy Milkov aka Small code", "Deepseek aka human", "ChatGPT aka woman", "GitHub Repositories", "And Others",
                             "with supporting from Eseniya", "with supporting from Gleb",
                             "with supporting from Konstantin", "under the leadership A. Belov"};
 
@@ -185,7 +188,7 @@ namespace GSM_Stribog
                 Console.WriteLine(developer);
                 for (int i = 0; i < 3; i++)
                 {
-                    Console.WriteLine(".");
+                    Console.WriteLine("");
                     Thread.Sleep(1000);
                 }
             }

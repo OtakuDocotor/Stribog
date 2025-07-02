@@ -244,7 +244,7 @@ namespace GSM_Stribog
             int len = input.Length;
             int index = len - 64;
             byte[] N_512 = BitConverter.GetBytes(512);
-            while (index>=0)
+            while (index >= 0)
             {
                 byte[] m = new byte[64];
                 Array.Copy(input, index, m, 0, 64);
@@ -257,7 +257,7 @@ namespace GSM_Stribog
 
             byte[] paddedMessage = new byte[64];
             Array.Copy(input, 0, paddedMessage, 64 - len, len);
-            for(int i=0;i<64-len-1;i++)
+            for(int i = 0; i < 64 - len - 1; i++)
             {
                 paddedMessage[i] = 0;
             }
