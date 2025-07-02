@@ -177,7 +177,7 @@ namespace GSM_Stribog
             Console.WriteLine("Thank you for your attention! We need a salary from the University, please postav`te 4! Mi vas lyubim! <3");
             Console.WriteLine();
 
-            Console.WriteLine("Над проектoм работали:");
+            Console.WriteLine("                                     Над проектoм работали:");
             List<string> developers = new List<string>() { "Ilya Sokolov aka Agent JRU", "Ilya Gusev aka ZhateckyGus",
                             "Dmitriy Milkov aka Small code", "Deepseek aka human", "ChatGPT aka woman", "GitHub Repositories", "And Others",
                             "with supporting from Eseniya", "with supporting from Gleb",
@@ -185,7 +185,7 @@ namespace GSM_Stribog
 
             foreach (var developer in developers)
             {
-                Console.WriteLine(developer);
+                Console.WriteLine("                                     " + developer);
                 for (int i = 0; i < 3; i++)
                 {
                     Console.WriteLine("");
